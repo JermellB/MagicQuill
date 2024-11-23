@@ -3,7 +3,6 @@ import os
 import gradio as gr
 import os
 from gradio_magicquill import MagicQuill
-import random
 import torch
 import numpy as np
 from PIL import Image, ImageOps
@@ -17,6 +16,7 @@ from MagicQuill.llava_new import LLaVAModel
 from MagicQuill.scribble_color_edit import ScribbleColorEditModel
 import time
 import io
+import secrets
 
 llavaModel = LLaVAModel()
 scribbleColorEditModel = ScribbleColorEditModel()
@@ -145,7 +145,7 @@ def generate(ckpt_name, total_mask, original_image, add_color_image, add_edge_im
 
 def generate_image_handler(x, ckpt_name, negative_prompt, fine_edge, grow_size, edge_strength, color_strength, inpaint_strength, seed, steps, cfg, sampler_name, scheduler):
     if seed == -1:
-        seed = random.randint(0, 2**32 - 1)
+        seed = secrets.SystemRandom().randint(0, 2**32 - 1)
     ms_data = x['from_frontend']
     positive_prompt = x['from_backend']['prompt']
     stroke_as_edge = "enable"

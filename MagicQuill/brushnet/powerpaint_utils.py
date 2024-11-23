@@ -1,10 +1,10 @@
 import copy
-import random
 
 import torch
 import torch.nn as nn
 from transformers import CLIPTokenizer
 from typing import Any, List, Optional, Union
+import secrets
 
 class TokenizerWrapper:
     """Tokenizer wrapper for CLIPTokenizer. Only support CLIPTokenizer
@@ -130,7 +130,7 @@ class TokenizerWrapper:
                 tokens = tokens[: 1 + int(len(tokens) * prop_tokens_to_load)]
                 if vector_shuffle:
                     tokens = copy.copy(tokens)
-                    random.shuffle(tokens)
+                    secrets.SystemRandom().shuffle(tokens)
                 text = text.replace(placeholder_token, " ".join(tokens))
         return text
 
