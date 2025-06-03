@@ -1,5 +1,4 @@
 import webcolors
-import random
 from collections import Counter
 import numpy as np
 from torchvision import transforms
@@ -7,6 +6,7 @@ import cv2  # OpenCV
 import torch
 import warnings
 import os
+import secrets
 
 
 
@@ -153,7 +153,7 @@ def find_different_colors(img1, img2, threshold=10):
     diff_indices = torch.nonzero(diff_mask, as_tuple=True)
 
     if len(diff_indices[0]) > 100:
-        sampled_indices = random.sample(range(len(diff_indices[0])), 100)
+        sampled_indices = secrets.SystemRandom().sample(range(len(diff_indices[0])), 100)
         sampled_diff_indices = (diff_indices[0][sampled_indices], diff_indices[1][sampled_indices])
     else:
         sampled_diff_indices = diff_indices
